@@ -14,11 +14,25 @@ class App extends Component {
 
   console.log(latestBlockNo);   
 
-  web3.eth.getBlock(latestBlockNo).then(console.log);
+  var hash;
+  function handleResponse(response) {
+    console.log('response status: ', response)
+    //console.log('depth is :'+depth);
+    console.log('hashIs :' + response.hash);
+    console.log('parent hash is: '+ response.parentHash);
+    hash=response.parentHash;
+    return response.parentHash;
+ }
 
+ const block = web3.eth.getBlock('latest').then(handleResponse);
+ const parentBlock=block.then(function (value) {
+  return web3.eth.getBlock(value).then(handleResponse);
+ });
+//  parentBlock.then(function (value){
+//    console.log(value);
+//  })
+}
 
-
-  }
   render() {
     return (
       <div className="App">
