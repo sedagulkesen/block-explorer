@@ -1,58 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Web3 from 'web3';
+  import React, { Component,  } from 'react';
+  import logo from './logo.svg';
+  import './App.css';
+  import Web3 from 'web3';
+  import Block from "./components/Block";
 
+  class App extends Component {
 
-class App extends Component {
-  
-  async componentDidMount() {
+    constructor(props) {
+      super(props);
+      this.state = { username: "Seda", loggedIn: true, blocks: []};
+      // const web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:3001'), null, {});
+    }
+    getMyBlock(){
+        const web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:3001'), null, {});
+        let obj = this
+        web3.eth.getBlock('latest').then(r => {
+            console.log('response status: ', r)
+            obj.state.blocks.push({number: r.number, hash:r.hash, parentHash: r.parentHash });
+            // obj.state.blocks.push(r.parentHash);
+            console.log('parent hash :' + r.parentHash);
+            this.setState({blocks:obj.state.blocks});
+            console.log(obj.state.blocks);
+        })
+    }
 
-  const web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:3001'), null, {});
+    async componentDidMount() {
+    
+      this.getMyBlock();
 
-  const latestBlockNo = await web3.eth.getBlockNumber();
+    }
 
-  console.log(latestBlockNo);   
-
-  var hash;
-  function handleResponse(response) {
-    console.log('response status: ', response)
-    //console.log('depth is :'+depth);
-    console.log('hashIs :' + response.hash);
-    console.log('parent hash is: '+ response.parentHash);
-    hash=response.parentHash;
-    return response.parentHash;
- }
-
- const block = web3.eth.getBlock('latest').then(handleResponse);
- const parentBlock=block.then(function (value) {
-  return web3.eth.getBlock(value).then(handleResponse);
- });
-//  parentBlock.then(function (value){
-//    console.log(value);
-//  })
-}
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    render() {
+      return (
+        <div className="App">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to {this.state.username} APP</h1>
+            <h2 > Latest Blocks</h2>
+          <div id= "block" style={{ display: "block" }}>
+            {this.state.blocks.map(block => (
+              <Block block={block} />
+            ))}
+          </div>
+        </div>
+      );
+    }
   }
-}
 
-export default App;
+  export default App;
