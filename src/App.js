@@ -9,7 +9,8 @@
     constructor(props) {
       super(props);
       this.state = { username: "Seda", loggedIn: true, blocks: []};
-      this.web3 = new Web3(Web3.givenProvider || new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws')), null, {});
+      this.web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
+      // this.web3 = new Web3(Web3.givenProvider || new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws')), null, {});
     }
     
     getBlock(blockHash='latest', depth=0){
