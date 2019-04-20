@@ -53,7 +53,6 @@ const buttonStyle = {
   };
 
   const popupStyle = {
-    margin: "30px",
     width:"400px",
     height:"500px",
   };
