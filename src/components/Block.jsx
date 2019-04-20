@@ -13,7 +13,7 @@ class Block extends Component {
     <div style= {divStyle}>
         <div>Block id: {number}</div>
         <Popup style= {popupStyle} trigger={open => (
-            <button style= {buttonStyle} className="button">Details {open ? '' : ''}</button>
+            <button style= {buttonStyle} className="button"> Details {open ? '' : ''}</button>
         )} position="right center" closeOnDocumentClick>
         <div>Block hash: {hash}</div>
         <div>Block parent hash: {parentHash}</div>
@@ -29,17 +29,19 @@ class Block extends Component {
 export default Block;
 
 const divStyle = {
-  background: "#7FD2F0",
-  margin: "30px",
-  width:"300px",
-  padding: "30px",
-  border: '5px solid pink'
+    background: "#7FD2F0",
+    margin: "30px",
+    width:"200px",
+    height:"25px",
+    padding: "30px",
+    border: '3px solid black',
+
 };
 
 const buttonStyle = {
-     background: "pink",
-     margin: "30px",
-     alignSelf: 'stretch',
+    background: "white",
+    margin: "10px",
+    alignSelf: 'stretch',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#007aff',

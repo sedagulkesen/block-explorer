@@ -73,8 +73,8 @@
       return (
         <div className="App">
             <h1 className="App-title">Welcome to {this.state.username}'s Block Explorer</h1>
-            <div>     <h2 > Latest Blocks</h2></div>
-          <div id= "block" style={{ display: "block" }}>
+            <div >     <h2 > Latest Blocks</h2></div>
+          <div align = "center" id= "block" style={{ display: "block" }}>
             {this.state.blocks.map(block => (
               <Block block={block} />
             ))}
