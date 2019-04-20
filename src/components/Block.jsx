@@ -4,10 +4,10 @@ class Block extends Component {
   render() {
     const {number,hash,parentHash} = this.props.block;
     return (
-      <div style={divStyle}>
-        <div>Block id: {number}</div>
+      <div style= {divStyle} >
+        <div>Block id:{number}</div>
         <div>Block hash: {hash}</div>
-        {/* <div>{parentHash}</div> */}
+        <div>My parent hash : {parentHash}</div>
       </div>
     );
   }

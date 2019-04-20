@@ -9,25 +9,26 @@
     constructor(props) {
       super(props);
       this.state = { username: "Seda", loggedIn: true, blocks: []};
-      // const web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:3001'), null, {});
+      this.web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:3000'), null, {});
     }
-    getMyBlock(){
-        const web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:3001'), null, {});
+    
+    getBlock(blockHash='latest', depth=0){
+      if(depth < 10)
+      {
         let obj = this
-        web3.eth.getBlock('latest').then(r => {
+        this.web3.eth.getBlock(blockHash).then(r => {
             console.log('response status: ', r)
             obj.state.blocks.push({number: r.number, hash:r.hash, parentHash: r.parentHash });
-            // obj.state.blocks.push(r.parentHash);
             console.log('parent hash :' + r.parentHash);
             this.setState({blocks:obj.state.blocks});
+            this.getBlock(r.parentHash, depth+1)
             console.log(obj.state.blocks);
         })
+      }
     }
-
-    async componentDidMount() {
-    
-      this.getMyBlock();
-
+  
+    componentDidMount() {
+      this.getBlock();
     }
 
     render() {
