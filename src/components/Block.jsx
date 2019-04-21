@@ -12,7 +12,7 @@ class Block extends Component {
     return (
     <div style= {divStyle}>
         <div>Block id: {number}</div>
-        <Popup style= {popupStyle} trigger={open => (
+        <Popup contentStyle= {popupStyle} trigger={open => (
             <button style= {buttonStyle} className="button"> Details {open ? '' : ''}</button>
         )} position="right center" closeOnDocumentClick>
         <div><b>Block hash:</b> {hash}</div>
@@ -50,8 +50,7 @@ const buttonStyle = {
 };
 
 const popupStyle = {
-    background: "pink",
-    width:"400px",
-    height:"500px",
+    background: "white",
+    width:"600px",
+    height:"150px",
 };
- 
