@@ -1,4 +1,4 @@
-  import React, { Component,  } from 'react';
+  import React, { Component } from 'react';
   import './App.css';
   import Web3 from 'web3';
   import Block from "./components/Block";
