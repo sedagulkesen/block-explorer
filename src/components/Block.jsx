@@ -50,6 +50,8 @@ const buttonStyle = {
 };
 
 const popupStyle = {
+    background: "pink",
     width:"400px",
     height:"500px",
 };
+ 
