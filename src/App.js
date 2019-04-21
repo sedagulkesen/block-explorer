@@ -17,7 +17,7 @@
         let obj = this
         this.web3.eth.getBlock(blockHash).then(r => {
             console.log('response status: ', r)
-            obj.state.blocks.push({number: r.number, hash:r.hash, parentHash: r.parentHash });
+            obj.state.blocks.push({number: r.number, hash:r.hash, parentHash: r.parentHash, difficulty: r.difficulty, gasLimit: r.gasLimit, gasUsed: r.gasUsed });
             console.log('parent hash :' + r.parentHash);
             this.getBlock(r.parentHash, depth+1)
             console.log(obj.state.blocks);
@@ -30,7 +30,7 @@
     }
 
     addOneBlock(block){
-      this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash}); //add block to the beginning
+      this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
       this.state.blocks.pop(); //pop the oldest element in array 
       //console.log("inside add one block "+ this.state.blocks);
       //console.log("inside add one block i am length"+ this.state.blocks.length);

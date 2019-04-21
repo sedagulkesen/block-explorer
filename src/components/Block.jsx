@@ -15,11 +15,11 @@ class Block extends Component {
         <Popup style= {popupStyle} trigger={open => (
             <button style= {buttonStyle} className="button"> Details {open ? '' : ''}</button>
         )} position="right center" closeOnDocumentClick>
-        <div>Block hash: {hash}</div>
-        <div>Block parent hash: {parentHash}</div>
-        <div>Block difficulty: {difficulty}</div>
-        <div>Gas limit: {gasLimit}</div>
-        <div>Gas used: {gasUsed}</div>
+        <div><b>Block hash:</b> {hash}</div>
+        <div><b>Block parent hash:</b> {parentHash}</div>
+        <div><b>Block difficulty:</b> {difficulty}</div>
+        <div><b>Gas limit:</b> {gasLimit}</div>
+        <div><b>Gas used:</b> {gasUsed}</div>
       </Popup>
     </div>
     );
