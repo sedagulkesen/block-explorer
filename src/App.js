@@ -8,7 +8,6 @@
     constructor(props) {
       super(props);
       this.state = { username: "Seda", loggedIn: true, blocks: []};
-      //this.addOneBlock= this.addOneBlock.bind(this);
       this.web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
         }
     
@@ -31,13 +30,11 @@
     }
 
     addOneBlock(block){
-      this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash});
-      this.state.blocks.pop();
-      console.log("inside add one block "+ this.state.blocks);
-      console.log("inside add one block i am length"+ this.state.blocks.length);
-      //console.log(this.state.blocks
+      this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash}); //add block to the beginning
+      this.state.blocks.pop(); //pop the oldest element in array 
+      //console.log("inside add one block "+ this.state.blocks);
+      //console.log("inside add one block i am length"+ this.state.blocks.length);
       this.setState({blocks:this.state.blocks});
-      console.log("inside add one block i am length 2   "+ this.state.blocks.length);
     }
 
     componentDidMount() {
@@ -53,11 +50,6 @@
         .on("data", function(blockHeader){
             console.log(blockHeader);
             obj.addOneBlock(blockHeader);
-            //obj.getBlock(blockHeader.hash);
-            // obj.state.blocks.push({number:blockHeader.number, hash:blockHeader.hash, parentHash: blockHeader.parentHash});
-            // console.log("burda basss " + obj.state.blocks.length);
-            // obj.setState({blocks:obj.state.blocks});
-
         })
         .on("error", console.error);
     
