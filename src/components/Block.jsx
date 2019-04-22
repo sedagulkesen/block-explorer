@@ -1,58 +1,18 @@
 import React, { Component } from "react";
-import Popup from "reactjs-popup";
 
 class Block extends Component {
+  constructor(props){
+    super(props);
+  }
 
   render() {
+    const handleClick= e => this.props.handlePopup(this.props.block);
     const {number,hash,parentHash,difficulty,gasLimit,gasUsed} = this.props.block;
     return (
     <div style= {divStyle}>
         <div>Block id: {number}</div>
-        {/* <Popup contentStyle= {popupStyle} trigger={open => (
-            <button style= {buttonStyle} className="button"> Details {open ? '' : ''}</button>
-        )} position="right"  closeOnDocumentClick>
-        <div><b>Block hash:</b> {hash}</div>
-        <div><b>Block parent hash:</b> {parentHash}</div>
-        <div><b>Block difficulty:</b> {difficulty}</div>
-        <div><b>Gas limit:</b> {gasLimit}</div>
-        <div><b>Gas used:</b> {gasUsed}</div>
-      </Popup> */}
-
-<Popup trigger={<button className="button"> More Details </button>}  modal>
-    {close => (
-      <div className="modal">
-        {/* <a className="close" onClick={close}>
-          &times;
-        </a> */}
-        <div className="header"> <b> Block #{number} </b> </div>
-        <br /> 
-        <div className="content">
-          {' '}
-            <div><b>Block hash:</b> {hash}</div>
-            <br />
-            <div><b>Block parent hash:</b> {parentHash}</div>
-            <br />
-            <div><b>Block difficulty:</b> {difficulty}</div>
-            <br />
-            <div><b>Gas limit:</b> {gasLimit}</div>
-            <br />
-            <div><b>Gas used:</b> {gasUsed}</div>
-            </div>
-        <div className="actions">
-          <button style={buttonStyle}
-            className="button"
-            onClick={() => {
-              console.log('modal closed ')
-              close()
-            }}
-          >
-            Close
-          </button>
+        <button style={buttonStyle} onClick={() => {handleClick()}}> More Details </button> 
         </div>
-      </div>
-    )}
-  </Popup>
-    </div>
     );
   }
 }
@@ -78,10 +38,4 @@ const buttonStyle = {
     borderColor: '#007aff',
     marginLeft: 5,
     marginRight: 5
-};
-
-const popupStyle = {
-    background: "white",
-    width:"600px",
-    height:"150px",
 };
