@@ -1,7 +1,7 @@
 # Block Explorer 
 
 
-Block Explorer is a Etherium Blockchain Explorer that displays latest 10 blocks with their detailed information.
+Block Explorer is a simple Etherium Blockchain Explorer that displays latest 10 blocks with their detailed information.
 
   Inside the project, you can run with the following commands:
      - yarn start or - npm start
