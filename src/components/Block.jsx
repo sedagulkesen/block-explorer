@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 class Block extends Component {
-  // constructor(props){
-  //   super(props);
-  // }
-
   render() {
     const handleClick= e => this.props.handlePopup(this.props.block);
     const {number} = this.props.block;

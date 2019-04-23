@@ -18,13 +18,15 @@
       this.setState({block:block});
       this.popupButton.current.click();
     }
+
     async getBlocks(){
-      var lastBlock= 'latest';
+      let lastBlock= 'latest';
       const {blocks}= this.state;
-      var pushFunc= function(res){
+      let pushFunc= function(res){
         blocks.push(res);
         return res.parentHash;
       }
+
       for(var i =0;i<10; i++){
         lastBlock= await this.web3.eth.getBlock(lastBlock).then(r=> pushFunc(r));
       }
@@ -36,8 +38,7 @@
       this.setState({blocks:[block, ...blocks.slice(0, blocks.length - 1)]});
     }
     componentDidMount=() => {
-      var blocks=[];
-      this.getBlocks(blocks);
+      this.getBlocks();
       this.subscription = this.web3.eth.subscribe('newBlockHeaders', (error, result) => {
         if (!error) {
             console.log(result);
@@ -51,6 +52,7 @@
         .on("error", console.error);
 
     }
+    
     componentWillUnmount= ()=> {
         // unsubscribes the subscription
         this.subscription.unsubscribe((error, success)=> {
