@@ -12,33 +12,29 @@
       this.web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws'));
       this.handlePopup=this.handlePopup.bind(this);
       this.popupButton= React.createRef();
+      this.subscription=null;
     }
     handlePopup=(block)=>{
       this.setState({block:block});
       this.popupButton.current.click();
     }
-    getBlock=(blockHash='latest', depth=0)=>{
-      const {blocks} = this.state;
-      if(depth < 10)
-      {
-        this.web3.eth.getBlock(blockHash).then(r => {
-            blocks.push(r);
-            this.setState({blocks});
-            this.getBlock(r.parentHash, depth+1);
+    getBlocks(blocks,blockHash = "latest", depth = 0) {
+      if (depth < 10) {
+          this.web3.eth.getBlock(blockHash).then(r => {
+          blocks.push(r);
+          this.getBlocks(blocks, r.parentHash, depth + 1);
         });
       }
+      this.setState({blocks:blocks});
     }
     addOneBlock = (block)=> {
       const {blocks} = this.state;
-      // this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
-      // this.state.blocks.pop(); //pop the oldest element in array 
-      // this.setState({blocks:this.state.blocks});
       this.setState({blocks:[block, ...blocks.slice(0, blocks.length - 1)]});
     }
-    componentDidMount() {
-      let obj=this
-      this.getBlock();
-      this.web3.eth.subscribe('newBlockHeaders', (error, result) => {
+    componentDidMount=() => {
+      var blocks=[];
+      this.getBlocks(blocks);
+      this.subscription = this.web3.eth.subscribe('newBlockHeaders', (error, result) => {
         if (!error) {
             console.log(result);
             return;
@@ -47,18 +43,21 @@
         })
         .on("data", (blockHeader) => {
             console.log(blockHeader);
-            obj.addOneBlock(blockHeader);
+            this.addOneBlock(blockHeader);
         })
         .on("error", console.error);
 
-    //     // unsubscribes the subscription
-    //     subscription.unsubscribe((error, success)=> {
-    //     if (error) return console.error(error);
-    //     if (success) {
-    //         console.log('Successfully unsubscribed!');
-    //     }
-    // });
     }
+    componentWillUnmount= ()=> {
+        // unsubscribes the subscription
+        this.subscription.unsubscribe((error, success)=> {
+        if (error) return console.error(error);
+        if (success) {
+            console.log('Successfully unsubscribed!');
+        }
+    });
+    }
+
     render() {
       return (
         <div className="App">
