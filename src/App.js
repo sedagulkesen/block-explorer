@@ -18,15 +18,19 @@
       this.setState({block:block});
       this.popupButton.current.click();
     }
-    getBlocks(blocks,blockHash = "latest", depth = 0) {
-      if (depth < 10) {
-          this.web3.eth.getBlock(blockHash).then(r => {
-          blocks.push(r);
-          this.getBlocks(blocks, r.parentHash, depth + 1);
-        });
+    async getBlocks(){
+      var lastBlock= 'latest';
+      const {blocks}= this.state;
+      var pushFunc= function(res){
+        blocks.push(res);
+        return res.parentHash;
       }
-      this.setState({blocks:blocks});
+      for(var i =0;i<10; i++){
+        lastBlock= await this.web3.eth.getBlock(lastBlock).then(r=> pushFunc(r));
+      }
+      this.setState({blocks});
     }
+
     addOneBlock = (block)=> {
       const {blocks} = this.state;
       this.setState({blocks:[block, ...blocks.slice(0, blocks.length - 1)]});
@@ -42,7 +46,6 @@
         console.error(error);
         })
         .on("data", (blockHeader) => {
-            console.log(blockHeader);
             this.addOneBlock(blockHeader);
         })
         .on("error", console.error);
