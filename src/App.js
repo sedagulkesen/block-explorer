@@ -30,35 +30,35 @@
     }
     addOneBlock = (block)=> {
       const {blocks} = this.state;
-      //this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
-      //this.state.blocks.pop(); //pop the oldest element in array 
+      // this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
+      // this.state.blocks.pop(); //pop the oldest element in array 
+      // this.setState({blocks:this.state.blocks});
       this.setState({blocks:[block, ...blocks.slice(0, blocks.length - 1)]});
     }
-
     componentDidMount() {
       let obj=this
       this.getBlock();
-      const subscription = this.web3.eth.subscribe('newBlockHeaders', function(error, result){
+      this.web3.eth.subscribe('newBlockHeaders', (error, result) => {
         if (!error) {
             console.log(result);
             return;
         }
         console.error(error);
         })
-        .on("data", function(blockHeader){
+        .on("data", (blockHeader) => {
             console.log(blockHeader);
             obj.addOneBlock(blockHeader);
         })
         .on("error", console.error);
 
-    //         // unsubscribes the subscription
-    //     subscription.unsubscribe(function(error, success){
+    //     // unsubscribes the subscription
+    //     subscription.unsubscribe((error, success)=> {
+    //     if (error) return console.error(error);
     //     if (success) {
     //         console.log('Successfully unsubscribed!');
     //     }
     // });
     }
-
     render() {
       return (
         <div className="App">
