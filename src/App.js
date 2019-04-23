@@ -13,29 +13,22 @@
       this.handlePopup=this.handlePopup.bind(this);
       this.popupButton= React.createRef();
     }
-
-    handlePopup(block){
+    handlePopup=(block)=>{
       this.setState({block:block});
       this.popupButton.current.click();
     }
-    getBlock(blockHash='latest', depth=0){
+    getBlock=(blockHash='latest', depth=0)=>{
+      const {blocks} = this.state;
       if(depth < 10)
       {
-        let obj = this
         this.web3.eth.getBlock(blockHash).then(r => {
-            console.log('response status: ', r)
-            obj.state.blocks.push({number: r.number, hash:r.hash, parentHash: r.parentHash, difficulty: r.difficulty, gasLimit: r.gasLimit, gasUsed: r.gasUsed });
-            console.log('parent hash :' + r.parentHash);
-            this.getBlock(r.parentHash, depth+1)
-            console.log(obj.state.blocks);
-        })
-      }
-      else
-      {
-        this.setState({blocks:this.state.blocks});
+            blocks.push(r);
+            this.setState({blocks});
+            this.getBlock(r.parentHash, depth+1);
+        });
       }
     }
-    addOneBlock(block){
+    addOneBlock = (block)=> {
       this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
       this.state.blocks.pop(); //pop the oldest element in array 
       this.setState({blocks:this.state.blocks});
@@ -56,6 +49,13 @@
             obj.addOneBlock(blockHeader);
         })
         .on("error", console.error);
+
+    //         // unsubscribes the subscription
+    //     subscription.unsubscribe(function(error, success){
+    //     if (success) {
+    //         console.log('Successfully unsubscribed!');
+    //     }
+    // });
     }
 
     render() {
@@ -64,8 +64,8 @@
             <h1 className="App-title">Welcome to {this.state.username}'s Block Explorer</h1>
             <div >     <h2 > Latest Blocks</h2></div>
           <div align = "center" id= "block" style={{ display: "block" }}>
-            {this.state.blocks.map(block => (
-              <Block block={block} handlePopup={this.handlePopup}/>
+            {this.state.blocks.map((block,index ) => (
+              <Block key= {index} block={block} handlePopup={this.handlePopup}/>
             ))}
           </div>
           <Popup trigger={<button style= {invisibleButton} ref={this.popupButton}> </button>}   modal>

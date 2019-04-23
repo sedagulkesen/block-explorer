@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
 class Block extends Component {
-  constructor(props){
-    super(props);
-  }
+  // constructor(props){
+  //   super(props);
+  // }
 
   render() {
     const handleClick= e => this.props.handlePopup(this.props.block);
-    const {number,hash,parentHash,difficulty,gasLimit,gasUsed} = this.props.block;
+    const {number} = this.props.block;
     return (
     <div style= {divStyle}>
         <div>Block id: {number}</div>
