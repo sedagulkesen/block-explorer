@@ -29,9 +29,10 @@
       }
     }
     addOneBlock = (block)=> {
-      this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
-      this.state.blocks.pop(); //pop the oldest element in array 
-      this.setState({blocks:this.state.blocks});
+      const {blocks} = this.state;
+      //this.state.blocks.unshift({number:block.number, hash:block.hash, parentHash: block.parentHash, difficulty: block.difficulty, gasLimit: block.gasLimit, gasUsed: block.gasUsed}); //add block to the beginning
+      //this.state.blocks.pop(); //pop the oldest element in array 
+      this.setState({blocks:[block, ...blocks.slice(0, blocks.length - 1)]});
     }
 
     componentDidMount() {
