@@ -2,13 +2,13 @@ import React, { Component } from "react";
 
 class Block extends Component {
   render() {
-    const handleClick= e => this.props.handlePopup(this.props.block);
-    const {number} = this.props.block;
+    const handleClick = e => this.props.handlePopup(this.props.block);
+    const { number } = this.props.block;
     return (
-    <div style= {divStyle}>
+      <div style={divStyle}>
         <div>Block id: {number}</div>
-        <button style={buttonStyle} onClick={() => {handleClick()}}> More Details </button> 
-        </div>
+        <button style={buttonStyle} onClick={() => { handleClick() }}> More Details </button>
+      </div>
     );
   }
 }
@@ -16,22 +16,22 @@ class Block extends Component {
 export default Block;
 
 const divStyle = {
-    background: "#7FD2F0",
-    margin: "30px",
-    width:"200px",
-    height:"25px",
-    padding: "30px",
-    border: '3px solid black',
+  background: "#7FD2F0",
+  margin: "30px",
+  width: "200px",
+  height: "25px",
+  padding: "30px",
+  border: '3px solid black',
 
 };
 
 const buttonStyle = {
-    background: "white",
-    margin: "10px",
-    alignSelf: 'stretch',
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#007aff',
-    marginLeft: 5,
-    marginRight: 5
+  background: "white",
+  margin: "10px",
+  alignSelf: 'stretch',
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: '#007aff',
+  marginLeft: 5,
+  marginRight: 5
 };
